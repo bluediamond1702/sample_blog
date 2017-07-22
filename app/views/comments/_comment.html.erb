@@ -1,0 +1,23 @@
+<div class="well">
+  <ul>
+    <li>
+      <strong><%= comment.user.name %></strong> says:
+      <%= comment.content %>
+      <div>
+        <%= link_to "Delete Comment", [comment.micropost, comment],
+                                      remote: true,
+                                      method: :delete,
+                                      data: { confirm: "Are u sure?" } %>
+      </div>
+
+      <%= form_for(Comment.new, url: comment_comments_path(comment), remote: true) do |f| %>
+        <%= f.text_area :content, placeholder: "Reply...." %>
+        <%= f.submit "Reply", class: "btn btn-primary btn-sm"%>
+      <% end %>
+
+      <ul>
+        <%= render partial: 'comments/comment', collection: comment.replies %>
+      </ul>
+    </li>
+  </ul>
+</div>
